@@ -356,7 +356,8 @@ export const Post = ({
   const isPostImageValid = useMemo(() => isValidImage(postImage), [postImage]);
 
   const handleShare = useCallback(() => {
-    const postUrl = `${window.location.origin}/posts/${postId}`;
+    //NOTE this URL only works in the github pages hosting
+    const postUrl = `${window.location.origin}/socials-project/posts/${postId}`;
 
     navigator.clipboard.writeText(postUrl);
     alert("Post link copied to clipboard!");
