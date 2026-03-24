@@ -97,8 +97,8 @@ export const AddPost = () => {
       });
 
       setTimeout(() => {
-        navigate(window.location.pathname);
-        console.log("using the navigate method");
+        navigate("/");
+        console.log("using the navigation to a manual route");
       }, 500);
     }
     //TODO ( handle errors )
