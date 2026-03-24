@@ -26,7 +26,7 @@ export const SideBar = () => {
           <li
             onClick={() => {
               setIsSideBarOpen((prev) => !prev);
-              navigate("/Home1");
+              navigate("/");
             }}
             className="nav-item p-3 py-3 sidebar-item "
           >

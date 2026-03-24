@@ -97,8 +97,8 @@ export const AddPost = () => {
       });
 
       setTimeout(() => {
-        navigate("/");
-        console.log("using the navigation to a manual route");
+        window.location.reload();
+        console.log("using window.location.reload(); ");
       }, 500);
     }
     //TODO ( handle errors )
