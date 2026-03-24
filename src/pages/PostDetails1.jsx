@@ -195,7 +195,8 @@ export const AddComment = ({ postId }) => {
       });
 
       setTimeout(() => {
-        navigate(0);
+        navigate(window.location.pathname);
+        console.log("using the navigate method");
       }, 500);
     } else {
       setRequestInfo({

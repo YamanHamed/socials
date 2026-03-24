@@ -97,7 +97,8 @@ export const AddPost = () => {
       });
 
       setTimeout(() => {
-        navigate(0);
+        navigate(window.location.pathname);
+        console.log("using the navigate method");
       }, 500);
     }
     //TODO ( handle errors )
