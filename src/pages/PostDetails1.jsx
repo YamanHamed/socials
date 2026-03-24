@@ -184,6 +184,7 @@ export const AddComment = ({ postId }) => {
     message: "no message",
     status: "initial",
   });
+  const navigate = useNavigate();
 
   async function handleComment() {
     const response = await addComment(postId, commentBody);
@@ -194,7 +195,7 @@ export const AddComment = ({ postId }) => {
       });
 
       setTimeout(() => {
-        window.location.reload();
+        navigate(0);
       }, 500);
     } else {
       setRequestInfo({

@@ -82,6 +82,7 @@ export const AddPost = () => {
     status: "initial",
   });
   const colors = useColors();
+  const navigate = useNavigate();
   async function handlePostClick() {
     const response = await addPost(
       postInfo.title,
@@ -96,7 +97,7 @@ export const AddPost = () => {
       });
 
       setTimeout(() => {
-        window.location.reload();
+        navigate(0);
       }, 500);
     }
     //TODO ( handle errors )

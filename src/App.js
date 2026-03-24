@@ -18,7 +18,6 @@ export default function App() {
   const token = localStorage.getItem("token");
   const isloggedin = !(token === undefined || token === null);
   const [loggedIn, setLoggedIn] = useState(isloggedin);
-  //"http://YamanHamed.github.io/socials-project",
 
   return (
     <div className="App">
