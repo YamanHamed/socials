@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "https://tarmeezacademy.com/api/v1";
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 export async function register(username, password, name, email, userImage) {
   const respnse = new FormData();
@@ -14,8 +14,7 @@ export async function register(username, password, name, email, userImage) {
     const response = await axios.post(`${API_BASE_URL}/register`, respnse, {
       headers: {
         "Content-Type": "multipart/form-data",
-        //prettier-ignore
-        "Accept": "application/json",
+        Accept: "application/json",
       },
     });
 
@@ -46,8 +45,7 @@ export async function logIn(username, password) {
       {
         headers: {
           "Content-Type": "application/json",
-          //prettier-ignore
-          "Accept": "application/json",
+          Accept: "application/json",
         },
       },
     );
@@ -166,9 +164,10 @@ export async function editPost(id, title, body, image) {
   formData.append("title", title);
   formData.append("body", body);
   formData.append("image", image);
-  console.log(formData);
+  formData.append("_method", "PUT");
+
   try {
-    const response = await axios.put(`${API_BASE_URL}/posts/${id}`, formData, {
+    const response = await axios.post(`${API_BASE_URL}/posts/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         //prettier-ignore
@@ -251,9 +250,11 @@ export async function deletePost(postId) {
     };
   }
 }
-export async function getUsers(limit = 100) {
+export async function getUsers(page = 1, limit = 50) {
   try {
-    const response = await axios.get(`${API_BASE_URL}/users?limit=${limit}`);
+    const response = await axios.get(
+      `${API_BASE_URL}/users?limit=${limit}&page=${page}`,
+    );
     return { success: true, data: response.data };
   } catch (error) {
     console.log("Error with getting users", error.response?.data);
@@ -311,59 +312,3 @@ export function isValidImage(imageFromAPI) {
   // Return the valid image
   return true;
 }
-
-/*export async function getAllPosts() {
-  let posts = [];
-  const BATCH_SIZE = 5; // Fetch 5 pages at a time
-  const DELAY_BETWEEN_BATCHES = 2500; // 2 second delay between batches
-
-  try {
-    // Get first page to determine total pages
-    const firstResponse = await axios.get(`${API_BASE_URL}/posts?page=1`);
-    posts.push(...firstResponse.data.data);
-
-    const lastPage = firstResponse.data.meta.last_page;
-    console.log(`Total pages to fetch: ${lastPage}`);
-
-    // Process pages in batches
-    for (let startPage = 2; startPage <= lastPage; startPage += BATCH_SIZE) {
-      const endPage = Math.min(startPage + BATCH_SIZE - 1, lastPage);
-      const batchPromises = [];
-
-      // Create promises for current batch
-      for (let page = startPage; page <= endPage; page++) {
-        batchPromises.push(axios.get(`${API_BASE_URL}/posts?page=${page}`));
-      }
-
-      // Execute batch in parallel (but with delay between batches)
-      const batchResponses = await Promise.all(batchPromises);
-
-      // Process batch results
-      batchResponses.forEach((response) => {
-        posts.push(...response.data.data);
-      });
-
-      console.log(`Fetched pages ${startPage}-${endPage} of ${lastPage}`);
-
-      // Delay before next batch (but not after the last batch)
-      if (endPage < lastPage) {
-        await new Promise((resolve) =>
-          setTimeout(resolve, DELAY_BETWEEN_BATCHES),
-        );
-      }
-    }
-
-    return { success: true, Allposts: posts };
-  }
-   catch (error) {
-    if (error.response?.status === 429) {
-      console.error(
-        "Rate limit exceeded. Try increasing delays or batch size.",
-      );
-    }
-    return {
-      success: false,
-      error: error.response?.data?.message || "getting posts failed",
-    };
-  }
-}*/

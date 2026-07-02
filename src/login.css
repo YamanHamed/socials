@@ -13,9 +13,26 @@
 }
 
 body {
+  margin: 0;
+  position: relative;
+  background-image: url("./imgs/pattern-bg.jpg");
+  z-index: 1;
   background-repeat: repeat;
   animation: slideLeft 10s linear infinite;
   min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.95;
+  background-color: #f8f9fa;
+  pointer-events: none; /* Ensures the pseudo-element doesn't interfere with clicks */
+  z-index: -1; /* Places it behind the content */
 }
 
 @keyframes slideLeft {
@@ -97,6 +114,12 @@ body {
 
 .sign-in-link:hover {
   color: var(--primary);
+}
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+  text-decoration: none;
 }
 
 .login-sec > .form-container > label {
@@ -273,6 +296,13 @@ body {
     transform: translateX(50%) translateY(-50%);
     background: linear-gradient(var(--primary), var(--accent));
     background: var(--main-color);
+    background: linear-gradient(
+      90deg,
+      var(--app-primary) 0%,
+      #4f6880 50%,
+      #e11d48 100%
+    );
+
     opacity: 0.9;
     border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
     animation: blobAnimation 4s ease-in-out infinite alternate;
